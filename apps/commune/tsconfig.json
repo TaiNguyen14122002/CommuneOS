@@ -17,7 +17,8 @@
   },
   "include": [
     "**/*.ts",
-    "**/*.vue"
+    "**/*.vue",
+    ".nuxt/nuxt.d.ts"
   ],
-  "exclude": ["node_modules", ".nuxt", "dist", ".output"]
+  "exclude": ["node_modules", "dist", ".output"]
 }
