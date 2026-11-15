@@ -35,13 +35,6 @@ Giấy phép của các thành phần bên thứ ba được liệt kê trong
 | Tầng 2 - Ứng dụng     | `apps/citizen/` | Kênh nộp hồ sơ trực tuyến cho người dân                               |
 | Cấu hình              | `packs/`        | Gói thủ tục: BPMN, biểu mẫu, bảng kiểm giấy tờ, wiki                  |
 
-| Tầng                  | Thư mục         | Nội dung                                                              |
-| --------------------- | --------------- | --------------------------------------------------------------------- |
-| Tầng 1 - Lõi headless | `core/`         | Cửa ngõ API, định danh, dữ liệu, quy trình, sổ cái, AI, bảng quản trị |
-| Tầng 2 - Ứng dụng     | `apps/commune/` | Ứng dụng xã cho cán bộ, lãnh đạo, cấp trên                            |
-| Tầng 2 - Ứng dụng     | `apps/citizen/` | Kênh nộp hồ sơ trực tuyến cho người dân                               |
-| Cấu hình              | `packs/`        | Gói thủ tục: BPMN, biểu mẫu, bảng kiểm giấy tờ, wiki                  |
-
 Lõi không cấp giao diện cho người dùng cuối; nó chỉ có bảng quản trị cho quản
 trị viên hệ thống. Ứng dụng ở Tầng 2 chỉ gọi lõi qua cửa ngõ API.
 
@@ -65,6 +58,15 @@ make test                 # kiểm thử cách ly xã qua gateway (cần DEMO_PA
 ```
 
 Mọi cấu hình nằm trong tệp `.env`; không cần sửa tệp mã nguồn nào.
+
+Sau khi `make up` chạy xong, mở trình duyệt:
+
+| Giao diện               | Địa chỉ               | Chạy bằng                                                    |
+| ----------------------- | --------------------- | ------------------------------------------------------------ |
+| Kênh người dân          | http://localhost:3000 | Docker (tự chạy)                                             |
+| Màn hình cán bộ xã      | http://localhost:3002 | Docker (tự chạy)                                             |
+| Bảng quản trị hệ thống  | http://localhost:3001 | `cd core/admin && npm install && npm run dev -- --port 3001` |
+| Trang quản trị Keycloak | http://localhost:8080 | Docker (tự chạy)                                             |
 
 ## Cấu hình
 
