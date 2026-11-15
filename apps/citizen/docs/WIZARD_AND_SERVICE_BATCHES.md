@@ -1,3 +1,7 @@
+<!--
+SPDX-FileCopyrightText: 2026 CommuneOS contributors
+SPDX-License-Identifier: Apache-2.0
+-->
 # Gợi ý thủ tục qua câu hỏi và nhóm hồ sơ chuẩn bị — CommuneOS
 
 ## Phạm vi
