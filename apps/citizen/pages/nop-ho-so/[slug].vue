@@ -27,6 +27,9 @@ function chooseRepresentation(id:string) {
 }
 const slug = String(route.params.slug)
 const initialDraftId = typeof route.query.draft === 'string' ? route.query.draft : ''
+const batchId = typeof route.query.bundle === 'string' ? route.query.bundle : ''
+const {data:batch} = await useFetch<{id:string;shared_consent:boolean;shared_data:{applicantName?:string;phone?:string};items:{procedure_id:string;application_id:string|null}[]}>(
+  `/api/service-batches/${encodeURIComponent(batchId||'missing')}`, {key:`citizen-filing-batch:${batchId||'none'}`,immediate:Boolean(batchId)})
 const { data: procedure, error: procedureError, refresh: retryProcedure } = await useFetch<Procedure>(
   `/api/procedures/${encodeURIComponent(slug)}`, { key: `citizen-procedure:${slug}` }
 )
@@ -98,6 +101,12 @@ watch(() => route.query.step, (value) => {
   const requested = parseStep(value)
   step.value = draftId.value ? (requested === 3 && !allowReview.value ? 2 : requested) : 1
 })
+// Explicit opt-in only: no sensitive field is copied from other component applications.
+watch(batch, value=>{
+  if(!value?.shared_consent || initialDraftId || !value.items.some(i=>i.procedure_id===slug&&!i.application_id))return
+  if(actingFor.value==='self' && value.shared_data.applicantName && !form.applicantName)form.applicantName=value.shared_data.applicantName
+  if(value.shared_data.phone && (!form.phone || form.phone===(profile.value?.phone||'')))form.phone=value.shared_data.phone
+},{immediate:true})
 watch(form, () => { confirmed.value = false }, { deep: true })
 watch(formData, () => { confirmed.value = false }, { deep: true })
 watch(uploaded, () => { confirmed.value = false }, { deep: true })
@@ -118,7 +127,7 @@ async function goStep(next: number) {
   step.value = next
   await navigateTo({
     path: route.path,
-    query: { step: String(next), ...(draftId.value ? { draft: draftId.value } : {}) }
+    query: { step: String(next), ...(draftId.value ? { draft: draftId.value } : {}), ...(batchId ? {bundle:batchId}: {}) }
   }, { replace: true })
 }
 async function saveDraft() {
@@ -130,7 +139,7 @@ async function saveDraft() {
   errorText.value = ''
   try {
     const payload = {
-      procedureId: procedure.value.id, applicantName: form.applicantName.trim(), representationId: actingFor.value==='representative'?representationId.value:null,
+      ...(batchId && !draftId.value ? {batchId}:{}), procedureId: procedure.value.id, applicantName: form.applicantName.trim(), representationId: actingFor.value==='representative'?representationId.value:null,
       phone: form.phone.trim(), description: form.description.trim(), receivingTenantId: selectedLocality.value || undefined,
       formData: sanitizeProcedureForm(procedure.value.id, formData)
     }
@@ -169,6 +178,7 @@ async function submit() {
 
 <template>
   <div class="space-y-4">
+    <NuxtLink v-if="batchId" :to="`/lien-thong/${batchId}`" class="inline-flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-2 text-sm font-bold text-brand-700">← Trở về nhóm hồ sơ</NuxtLink>
     <NuxtLink :to="`/thu-tuc/${slug}`" class="inline-flex items-center gap-1 text-xs font-semibold text-brand-700">
       <ArrowLeft :size="14" /> Chi tiết thủ tục
     </NuxtLink>
