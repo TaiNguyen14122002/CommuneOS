@@ -17,9 +17,11 @@ services:
       POSTGRES_APP_PASSWORD: ${POSTGRES_APP_PASSWORD}
       POSTGRES_REST_PASSWORD: ${POSTGRES_REST_PASSWORD}
       WORKFLOW_TOKEN: ${WORKFLOW_TOKEN}
+    # Do not run app migrations via docker-entrypoint-initdb.d:
+    # on a fresh volume, guidance rules reference procedures before seed.sql exists.
+    # db-setup owns the ordered schema/seed/migration lifecycle.
     volumes:
       - db-data:/var/lib/postgresql/data
-      - ./core/db/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test:
         [
@@ -28,7 +30,8 @@ services:
         ]
       interval: 5s
       timeout: 3s
-      retries: 10
+      retries: 20
+      start_period: 90s
     ports:
       - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
 
@@ -117,6 +120,7 @@ services:
         psql -v ON_ERROR_STOP=1 -f /setup/init/10-ledger.sql
         psql -v ON_ERROR_STOP=1 -f /setup/init/11-citizen-guidance-batches.sql
         psql -v ON_ERROR_STOP=1 -f /setup/init/11-workflow.sql
+        psql -v ON_ERROR_STOP=1 -f /setup/init/12-citizen-case-review-counter.sql
         sh /setup/init/12-workflow-secret.sh
         psql -v ON_ERROR_STOP=1 -c "SELECT count(*) AS published_procedures FROM procedures WHERE published = true"
         echo 'PostgreSQL setup finished successfully.'
