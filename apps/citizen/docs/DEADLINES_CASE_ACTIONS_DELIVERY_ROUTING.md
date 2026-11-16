@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 CommuneOS Contributors
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Cảnh báo hạn xử lý, đề nghị về hồ sơ, nhận kết quả và chuyển cơ quan
 
 **Phạm vi:** Kênh công dân CommuneOS, dựa trên mã nguồn đã có chức năng kiểm tra trước nộp và tiến trình cán bộ. Đây là cơ chế hỗ trợ tiếp nhận yêu cầu; **không tự kết luận điều kiện pháp lý hoặc phê duyệt thay cán bộ**.
