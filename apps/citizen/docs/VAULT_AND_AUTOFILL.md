@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 CommuneOS Contributors
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Kho giấy tờ cá nhân và gợi ý tự điền (Kênh công dân)
 
 > Bản thử nghiệm trên CommuneOS. Không tải dữ liệu nhạy cảm/giấy tờ thật khi chạy với tài khoản demo.

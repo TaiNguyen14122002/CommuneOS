@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 CommuneOS Contributors
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Bàn giao phần mở rộng Kênh công dân – Kho giấy tờ và tự điền
 
 **Phiên bản nền**: `commune-os-feat-citizen-portal-integrated.zip` người dùng cung cấp ngày 16/11/2026.
