@@ -310,7 +310,7 @@ async function submit() {
             Bản nháp: {{ draftId }}
           </span>
         </div>
-        <div class="grid grid-cols-3 gap-2" aria-label="Các bước nộp hồ sơ">
+        <div class="grid grid-cols-1 gap-2 min-[440px]:grid-cols-3" aria-label="Các bước nộp hồ sơ">
           <div v-for="(title, index) in ['Điền biểu mẫu', 'Tải giấy tờ', 'Xác nhận & nộp']" :key="title"
             :class="['rounded-lg px-2 py-3 text-center text-xs font-bold sm:text-sm', step === index+1 ? 'bg-brand-600 text-white' : step > index+1 ? 'bg-green-100 text-green-800' : 'bg-slate-100 text-slate-500']"
             :aria-current="step === index+1 ? 'step' : undefined">
