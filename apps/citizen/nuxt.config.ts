@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     ragToken: process.env.CITIZEN_RAG_TOKEN || '',
     resultEndpoint: process.env.CITIZEN_RESULTS_ENDPOINT || '',
     resultToken: process.env.CITIZEN_RESULTS_TOKEN || '',
+    ocrEndpoint: process.env.CITIZEN_OCR_ENDPOINT || '',
     supportEndpoint: process.env.CITIZEN_SUPPORT_ENDPOINT || '',
     staffBridgeToken: process.env.CITIZEN_STAFF_BRIDGE_TOKEN || '',
     supportToken: process.env.CITIZEN_SUPPORT_TOKEN || '',

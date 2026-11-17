@@ -23,7 +23,7 @@ const list=computed(()=>{
   return base.filter(p=>(!category.value||p.category===category.value)&&normalizeSearch(`${p.title} ${p.summary} ${p.category}`).includes(normalizeSearch(q.value)))
 })
 const reasons=(id:string)=>ranked.value?recommendations.value?.items.find(p=>p.id===id)?.reasons:undefined
-function reset(){q.value='';category.value='';showRecommended=false}
+function reset(){q.value='';category.value='';showRecommended.value=false}
 </script>
 <template>
 <div class="space-y-4">
