@@ -1,8 +1,16 @@
 // SPDX-FileCopyrightText: 2026 CommuneOS Contributors
 // SPDX-License-Identifier: Apache-2.0
+import {fileURLToPath} from 'node:url'
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-01',
   devtools: { enabled: false },
+  // pg uses its JavaScript driver; the optional pg-native binding must not be
+  // bundled into Cloudflare Workers. Nitro aliases it to an explicit guard.
+  nitro: {
+    alias: {
+      'pg-native': fileURLToPath(new URL('./server/shims/pg-native-unavailable.mjs', import.meta.url))
+    }
+  },
   modules: ['@nuxtjs/tailwindcss'],
   tailwindcss: { cssPath: '~/assets/css/main.css' },
   app: {
