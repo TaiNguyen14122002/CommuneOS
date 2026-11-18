@@ -44,5 +44,5 @@ test('friction aggregation does not store raw text, session identity, or low-vol
 test('new documentation is in apps/citizen/docs and inherits SPDX',()=>{
  const docs=read('../docs/LIFE_JOURNEYS_14_FEATURES.md')
  assert.match(docs,/SPDX-FileCopyrightText/)
- assert.match(docs,/SPDX-License-Identifier: Apache-2.0/)
+ assert.match(docs,/SPDX-License[-]Identifier: Apache-2\.0/)
 })
